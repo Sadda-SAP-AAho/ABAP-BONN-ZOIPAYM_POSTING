@@ -20,13 +20,6 @@ annotate view ZC_OIPAYMENTS with
       invocationGrouping: #CHANGE_SET,
     importance: #HIGH
   },{
-    position: 20 , 
-      label: 'Post',
-      type: #FOR_ACTION,
-      dataAction: 'post',
-      invocationGrouping: #CHANGE_SET,
-    importance: #HIGH
-  }, {
     position: 10 
   } ]
   @UI.lineItem: [{
@@ -37,13 +30,6 @@ annotate view ZC_OIPAYMENTS with
       invocationGrouping: #CHANGE_SET,
     importance: #HIGH
   },{
-    position: 20 , 
-      label: 'Post',
-      type: #FOR_ACTION,
-      dataAction: 'post',
-      invocationGrouping: #CHANGE_SET,
-    importance: #HIGH
-  }, {
     position: 10 
   } ]
   @UI.selectionField: [ {
@@ -63,12 +49,21 @@ annotate view ZC_OIPAYMENTS with
   } ]
   Documentdate;
   
-  @EndUserText.label: 'Business Partner'
-  @UI.identification: [ {
+  @EndUserText.label: 'Created Time' 
+    @UI.identification: [ {
     position: 30 
   } ]
   @UI.lineItem: [ {
     position: 30 
+  } ]
+  Createdtime;
+  
+  @EndUserText.label: 'Business Partner'
+  @UI.identification: [ {
+    position: 40 
+  } ]
+  @UI.lineItem: [ {
+    position: 40 
   } ]
   @UI.selectionField: [ {
     position: 30 
@@ -79,68 +74,60 @@ annotate view ZC_OIPAYMENTS with
   Bpartner;
   
   @UI.identification: [ {
-    position: 40 
+    position: 50 
   } ]
   @UI.lineItem: [ {
-    position: 40 
+    position: 50 
   } ]
   Postingdate;
   
-  @EndUserText.label: 'G/L Amount' 
+  @EndUserText.label: 'Amount' 
   @UI.identification: [ {
-    position: 50 
+    position: 60 
   } ]
   @UI.lineItem: [ {
-    position: 50 
+    position: 60 
   } ]
   Glamount;
   
   @UI.identification: [ {
-    position: 60 
+    position: 70 
   } ]
   @UI.lineItem: [ {
-    position: 60 
+    position: 70 
   } ]
     @Consumption.valueHelpDefinition: [{ entity:{ name: 'I_PlantStdVH', element:'Plant' }}]
   Businessplace;
   
   @EndUserText.label: 'Section Code'
   @UI.identification: [ {
-    position: 70 
+    position: 80 
   } ]
   @UI.lineItem: [ {
-    position: 70 
+    position: 80 
   } ]
   Sectioncode;
   
-  @EndUserText.label: 'G/L Text'
+  @EndUserText.label: 'Text'
   @UI.identification: [ {
-    position: 80 
+    position: 90 
   } ]
   @UI.lineItem: [ {
-    position: 80 
+    position: 90 
   } ]
   Gltext;
   
   @UI.identification: [ {
-    position: 90 
+    position: 100 
   } ]
   @UI.lineItem: [ {
-    position: 90 
+    position: 100 
   } ]
    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZR_GLAccountVH', element: 'GLACCOUNT' },
   additionalBinding: [{ localElement: 'Companycode',    element: 'CompanyCode',   usage:#FILTER }]
    }]
   Glaccount;
-  
-  @EndUserText.label: 'Business Partner Amount'
-  @UI.identification: [ {
-    position: 100 
-  } ]
-  @UI.lineItem: [ {
-    position: 100 
-  } ]
-  Buamount;
+
   
   @UI.identification: [ {
     position: 110 
@@ -169,16 +156,7 @@ annotate view ZC_OIPAYMENTS with
   } ]
    @Consumption.valueHelpDefinition: [{ entity: { name: 'I_ProfitCenterStdVH', element: 'Profitcenter' }}]
   Profitcenter;
-  
-  @EndUserText.label: 'Business Partner Text'
-  @UI.identification: [ {
-    position: 140 
-  } ]
-  @UI.lineItem: [ {
-    position: 140 
-  } ]
-  Butext;
-  
+
  @UI.hidden: true
   Isdeleted;
   

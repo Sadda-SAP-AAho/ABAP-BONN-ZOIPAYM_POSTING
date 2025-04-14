@@ -7,24 +7,22 @@ define root view entity ZR_OIPAYMENTS
   key companycode as Companycode,
   key documentdate as Documentdate,
   key bpartner as Bpartner,
+  key createdtime as Createdtime,
   postingdate as Postingdate,
-  @Semantics.amount.currencyCode: 'Currencycode'
   glamount as Glamount,
   accountingdocument as Accountingdocument,
+  documenttype as AccountingDocumenttype,
   businessplace as Businessplace,
   sectioncode as Sectioncode,
   gltext as Gltext,
   glaccount as Glaccount,
-  @Semantics.amount.currencyCode: 'Currencycode'
-  buamount as Buamount,
   housebank as Housebank,
   accountid as Accountid,
   profitcenter as Profitcenter,
-  butext as Butext,
-  @Consumption.valueHelpDefinition: [ {
+    @Consumption.valueHelpDefinition: [ {
     entity.name: 'I_CurrencyStdVH', 
     entity.element: 'Currency', 
-    useForValidation: true
+    useForValidation: false
   } ]
   currencycode as Currencycode,
   isdeleted as Isdeleted,

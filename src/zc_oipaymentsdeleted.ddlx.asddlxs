@@ -61,7 +61,7 @@ annotate entity ZC_OIPAYMENTSDELETED
   } ]
   Postingdate;
   
-  @EndUserText.label: 'G/L Amount' 
+  @EndUserText.label: 'Amount' 
   @UI.identification: [ {
     position: 50 
   } ]
@@ -88,7 +88,7 @@ annotate entity ZC_OIPAYMENTSDELETED
   } ]
   Sectioncode;
   
-  @EndUserText.label: 'G/L Account Text'
+  @EndUserText.label: 'Text'
   @UI.identification: [ {
     position: 80 
   } ]
@@ -107,16 +107,7 @@ annotate entity ZC_OIPAYMENTSDELETED
   additionalBinding: [{ localElement: 'Companycode',    element: 'CompanyCode',   usage:#FILTER }]
    }]
   Glaccount;
-  
-  @EndUserText.label: 'Business Partner Amount'
-  @UI.identification: [ {
-    position: 100 
-  } ]
-  @UI.lineItem: [ {
-    position: 100 
-  } ]
-  Buamount;
-  
+
   @UI.identification: [ {
     position: 110 
   } ]
@@ -145,15 +136,6 @@ annotate entity ZC_OIPAYMENTSDELETED
    @Consumption.valueHelpDefinition: [{ entity: { name: 'I_ProfitCenterStdVH', element: 'Profitcenter' }}]
   Profitcenter;
   
-  @EndUserText.label: 'Business Partner Text'
-  @UI.identification: [ {
-    position: 140 
-  } ]
-  @UI.lineItem: [ {
-    position: 140 
-  } ]
-  Butext;
-  
   
   @UI.identification: [ {
     position: 150 
@@ -173,6 +155,10 @@ annotate entity ZC_OIPAYMENTSDELETED
   
   @UI.hidden: true
   LastChangedBy;
+  
+  
+  @UI.hidden: true
+  Createdtime;
   
   @UI.hidden: true
   LastChangedAt;

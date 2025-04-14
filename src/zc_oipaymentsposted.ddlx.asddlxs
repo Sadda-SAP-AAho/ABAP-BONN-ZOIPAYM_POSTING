@@ -36,21 +36,30 @@ annotate entity ZC_OIPAYMENTSPOSTED
   } ]
   Accountingdocument;
   
-  @UI.identification: [ {
+  
+    @UI.identification: [ {
     position: 30 
   } ]
   @UI.lineItem: [ {
     position: 30 
+  } ]
+  AccountingDocumenttype;
+  
+  @UI.identification: [ {
+    position: 40 
+  } ]
+  @UI.lineItem: [ {
+    position: 40 
   } ]
   Documentdate;
   
   
   @EndUserText.label: 'Business Partner'
   @UI.identification: [ {
-    position: 40 
+    position: 50 
   } ]
   @UI.lineItem: [ {
-    position: 40 
+    position: 50 
   } ]
   @UI.selectionField: [ {
     position: 30 
@@ -61,75 +70,66 @@ annotate entity ZC_OIPAYMENTSPOSTED
   Bpartner;
   
   @UI.identification: [ {
-    position: 50 
+    position: 60 
   } ]
   @UI.lineItem: [ {
-    position: 50 
+    position: 60 
   } ]
   Postingdate;
   
 
-  @EndUserText.label: 'G/L Amount' 
+  @EndUserText.label: 'Amount' 
   @UI.identification: [ {
-    position: 60 
+    position: 70 
   } ]
   @UI.lineItem: [ {
-    position: 60 
+    position: 70 
   } ]
   Glamount;
   
   @UI.identification: [ {
-    position: 70 
+    position: 80 
   } ]
   @UI.lineItem: [ {
-    position: 70 
+    position: 80 
   } ]
    @Consumption.valueHelpDefinition: [{ entity:{ name: 'I_PlantStdVH', element:'Plant' }}]
   Businessplace;
   
   @EndUserText.label: 'Section Code'
   @UI.identification: [ {
-    position: 80 
+    position: 90 
   } ]
   @UI.lineItem: [ {
-    position: 80 
+    position: 90 
   } ]
   Sectioncode;
   
-  @EndUserText.label: 'G/L Account Text'
+  @EndUserText.label: 'Text'
   @UI.identification: [ {
-    position: 90 
+    position: 100 
   } ]
   @UI.lineItem: [ {
-    position: 90 
+    position: 100 
   } ]
   Gltext;
   
   @UI.identification: [ {
-    position: 100 
+    position: 110 
   } ]
   @UI.lineItem: [ {
-    position: 100 
+    position: 110 
   } ]
    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZR_GLAccountVH', element: 'GLACCOUNT' },
   additionalBinding: [{ localElement: 'Companycode',    element: 'CompanyCode',   usage:#FILTER }]
    }]
   Glaccount;
   
-  @EndUserText.label: 'Business Partner Amount'
   @UI.identification: [ {
-    position: 110 
+    position: 130 
   } ]
   @UI.lineItem: [ {
-    position: 110 
-  } ]
-  Buamount;
-  
-  @UI.identification: [ {
-    position: 120 
-  } ]
-  @UI.lineItem: [ {
-    position: 120 
+    position: 130 
   } ]
    @Consumption.valueHelpDefinition: [{ entity: { name: 'ZR_HOUSEBANKVH', element: 'HouseBank' },
   additionalBinding: [{ localElement: 'Companycode',    element: 'CompanyCode',   usage:#FILTER }]
@@ -137,47 +137,42 @@ annotate entity ZC_OIPAYMENTSPOSTED
   Housebank;
   
   @UI.identification: [ {
-    position: 130 
+    position: 140 
   } ]
   @UI.lineItem: [ {
-    position: 130 
+    position: 140 
   } ]
   Accountid;
   
   @UI.identification: [ {
-    position: 140 
+    position: 150 
   } ]
   @UI.lineItem: [ {
-    position: 140 
+    position: 150 
   } ]
    @Consumption.valueHelpDefinition: [{ entity: { name: 'I_ProfitCenterStdVH', element: 'Profitcenter' }}]
   Profitcenter;
-  
-    @EndUserText.label: 'Business Partner Text'
-  @UI.identification: [ {
-    position: 150 
-  } ]
-  @UI.lineItem: [ {
-    position: 150 
-  } ]
-  Butext;
-  
+
   
   @UI.identification: [ {
-    position: 160 
+    position: 170 
   } ]
   @UI.lineItem: [ {
-    position: 160 
+    position: 170 
   } ]
   CreatedBy;
   
   @UI.identification: [ {
-    position: 170 
+    position: 180 
   } ]
   @UI.lineItem: [ {
-    position: 170 
+    position: 180 
   } ]
   CreatedAt;
+  
+  @UI.hidden: true
+  Createdtime;
+  
   
   @UI.hidden: true
   LastChangedBy;

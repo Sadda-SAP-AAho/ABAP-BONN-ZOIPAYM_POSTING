@@ -18,6 +18,7 @@ authorization master( global )
   field ( readonly : update )
    Companycode,
    Documentdate,
+   Createdtime,
    Bpartner;
 
 
@@ -25,26 +26,24 @@ authorization master( global )
   update;
 
   action falsedelete;
-  action post;
-
 
   mapping for ZOIPAYMENTS
   {
     Companycode = companycode;
     Documentdate = documentdate;
     Bpartner = bpartner;
+    Createdtime = createdtime;
     Postingdate = postingdate;
     Glamount = glamount;
     Accountingdocument = accountingdocument;
+    AccountingDocumenttype = documenttype;
     Businessplace = businessplace;
     Sectioncode = sectioncode;
     Gltext = gltext;
     Glaccount = glaccount;
-    Buamount = buamount;
     Housebank = housebank;
     Accountid = accountid;
     Profitcenter = profitcenter;
-    Butext = butext;
     Currencycode = currencycode;
     Isdeleted = isdeleted;
     Isposted = isposted;

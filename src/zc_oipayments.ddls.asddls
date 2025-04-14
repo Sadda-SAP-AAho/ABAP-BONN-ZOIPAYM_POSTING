@@ -8,17 +8,16 @@ define root view entity ZC_OIPAYMENTS
   key Companycode,
   key Documentdate,
   key Bpartner,
+  key Createdtime,
   Postingdate,
   Glamount,
   Businessplace,
   Sectioncode,
   Gltext,
   Glaccount,
-  Buamount,
   Housebank,
   Accountid,
   Profitcenter,
-  Butext,
   @Semantics.currencyCode: true
   Currencycode,
   Isdeleted,
@@ -28,6 +27,5 @@ define root view entity ZC_OIPAYMENTS
   LastChangedBy,
   LastChangedAt,
   LocalLastChangedAt
-  
 }
 where Isposted = '' and Isdeleted = ''

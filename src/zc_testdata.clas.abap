@@ -15,7 +15,7 @@ ENDCLASS.
 CLASS zc_testdata IMPLEMENTATION.
 
     METHOD if_oo_adt_classrun~main.
-      update  zoipayments set isdeleted = ''.
+      delete from  zoipayments." set isdeleted = ''.
     ENDMETHOD.
 
 ENDCLASS.

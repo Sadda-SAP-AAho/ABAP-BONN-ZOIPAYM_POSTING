@@ -9,10 +9,6 @@ CLASS LHC_ZR_OIPAYMENTS DEFINITION INHERITING FROM CL_ABAP_BEHAVIOR_HANDLER.
       METHODS falsedelete FOR MODIFY
       IMPORTING keys FOR ACTION ZrOipayments~falsedelete.
 
-   METHODS post FOR MODIFY
-      IMPORTING keys FOR ACTION ZrOipayments~post.
-
-
 
 ENDCLASS.
 
@@ -29,23 +25,6 @@ CLASS LHC_ZR_OIPAYMENTS IMPLEMENTATION.
             WITH VALUE #( FOR key in keys INDEX INTO i (
                 %tky       = key-%tky
                 Isdeleted = abap_true
-              ) )
-            FAILED DATA(lt_failed)
-            REPORTED DATA(lt_reported).
-
-
-
-  ENDMETHOD.
-
-
-  METHOD post.
-
-    MODIFY ENTITIES OF zr_oipayments IN LOCAL MODE
-            ENTITY ZrOipayments
-            UPDATE FIELDS ( Isposted )
-            WITH VALUE #( FOR key in keys INDEX INTO i (
-                %tky       = key-%tky
-                Isposted = abap_true
               ) )
             FAILED DATA(lt_failed)
             REPORTED DATA(lt_reported).
