@@ -86,8 +86,8 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
       ENDMETHOD.
 
       METHOD postCustomerPayment.
-       DATA: lt_je_deep TYPE TABLE FOR ACTION IMPORT i_journalentrytp~post,
-             document TYPE string.
+        DATA: lt_je_deep TYPE TABLE FOR ACTION IMPORT i_journalentrytp~post,
+              document   TYPE string.
 
 
         APPEND INITIAL LINE TO lt_je_deep ASSIGNING FIELD-SYMBOL(<je_deep>).
@@ -96,7 +96,7 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
         companycode = wa_data-Companycode
         businesstransactiontype = 'RFBU'
         accountingdocumenttype = 'DZ'
-        CreatedByUser = SY-uname
+        CreatedByUser = sy-uname
         documentdate = wa_data-Documentdate
         postingdate = cl_abap_context_info=>get_system_date( )
 
@@ -132,32 +132,32 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
 
         IF ls_failed_deep IS NOT INITIAL.
 
-        LOOP AT ls_reported_deep-journalentry ASSIGNING FIELD-SYMBOL(<ls_reported_deep>).
-         message = <ls_reported_deep>-%msg->if_message~get_text( ).
-        ENDLOOP.
-         RETURN.
+          LOOP AT ls_reported_deep-journalentry ASSIGNING FIELD-SYMBOL(<ls_reported_deep>).
+            message = <ls_reported_deep>-%msg->if_message~get_text( ).
+          ENDLOOP.
+          RETURN.
         ELSE.
 
-        COMMIT ENTITIES BEGIN
-        RESPONSE OF i_journalentrytp
-        FAILED DATA(lt_commit_failed)
-        REPORTED DATA(lt_commit_reported).
+          COMMIT ENTITIES BEGIN
+          RESPONSE OF i_journalentrytp
+          FAILED DATA(lt_commit_failed)
+          REPORTED DATA(lt_commit_reported).
 
-            IF lt_commit_reported IS NOT INITIAL.
-              LOOP AT lt_commit_reported-journalentry ASSIGNING FIELD-SYMBOL(<ls_reported>).
-                document = <ls_reported>-AccountingDocument.
-              ENDLOOP.
-            ELSE.
-              LOOP AT lt_commit_failed-journalentry ASSIGNING FIELD-SYMBOL(<ls_failed>).
-                message = <ls_failed>-%fail-cause.
-              ENDLOOP.
-                RETURN.
-              ENDIF.
+          IF lt_commit_reported IS NOT INITIAL.
+            LOOP AT lt_commit_reported-journalentry ASSIGNING FIELD-SYMBOL(<ls_reported>).
+              document = <ls_reported>-AccountingDocument.
+            ENDLOOP.
+          ELSE.
+            LOOP AT lt_commit_failed-journalentry ASSIGNING FIELD-SYMBOL(<ls_failed>).
+              message = <ls_failed>-%fail-cause.
+            ENDLOOP.
+            RETURN.
+          ENDIF.
 
-        COMMIT ENTITIES END.
+          COMMIT ENTITIES END.
 
-        IF document IS NOT INITIAL.
-          message = |Document Created Successfully: { document }|.
+          IF document IS NOT INITIAL.
+            message = |Document Created Successfully: { document }|.
             MODIFY ENTITIES OF zr_oipayments
             ENTITY ZrOipayments
             UPDATE FIELDS ( Accountingdocument Postingdate Isposted )
@@ -172,9 +172,15 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
                 )  )
             FAILED DATA(lt_failed)
             REPORTED DATA(lt_reported).
-        ELSE.
-          message = |Document Creation Failed: { message }|.
-        ENDIF.
+            COMMIT ENTITIES BEGIN
+               RESPONSE OF zr_oipayments
+               FAILED DATA(lt_commit_failed2)
+               REPORTED DATA(lt_commit_reported2).
+            ...
+            COMMIT ENTITIES END.
+          ELSE.
+            message = |Document Creation Failed: { message }|.
+          ENDIF.
 
         ENDIF.
 
@@ -263,6 +269,14 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
                 )  )
             FAILED DATA(lt_failed)
             REPORTED DATA(lt_reported).
+
+          COMMIT ENTITIES BEGIN
+          RESPONSE OF zr_oipayments
+          FAILED DATA(lt_commit_failed2)
+          REPORTED DATA(lt_commit_reported2).
+
+          ...
+          COMMIT ENTITIES END.
           ELSE.
             message = |Document Creation Failed: { message }|.
           ENDIF.
