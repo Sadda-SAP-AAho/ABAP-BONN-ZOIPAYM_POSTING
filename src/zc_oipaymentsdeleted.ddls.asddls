@@ -21,6 +21,7 @@ provider contract transactional_query
   Profitcenter,
   @Semantics.currencyCode: true
   Currencycode,
+  Assignmentreference,
   Isdeleted,
   Isposted,
   CreatedBy,

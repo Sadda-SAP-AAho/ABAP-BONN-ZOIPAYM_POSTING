@@ -153,6 +153,14 @@ annotate entity ZC_OIPAYMENTSDELETED
   } ]
   CreatedAt;
   
+     @UI.identification: [ {
+    position: 190 
+  } ]
+  @UI.lineItem: [ {
+    position: 190 
+  } ]
+  Assignmentreference;
+  
   @UI.hidden: true
   LastChangedBy;
   

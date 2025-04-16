@@ -21,6 +21,7 @@ define root view entity ZC_OIPAYMENTS
   Profitcenter,
   @Semantics.currencyCode: true
   Currencycode,
+  Assignmentreference,
   Isdeleted,
   Isposted,
   CreatedBy,

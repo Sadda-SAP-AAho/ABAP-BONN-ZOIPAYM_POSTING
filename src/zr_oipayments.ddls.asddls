@@ -25,6 +25,7 @@ define root view entity ZR_OIPAYMENTS
     useForValidation: false
   } ]
   currencycode as Currencycode,
+  assignmentreference as Assignmentreference,
   isdeleted as Isdeleted,
   isposted as Isposted,
   @Semantics.user.createdBy: true

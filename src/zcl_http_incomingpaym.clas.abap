@@ -52,6 +52,7 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
                  housebank     TYPE c LENGTH 10,
                  accountid     TYPE c LENGTH 10,
                  profitcenter  TYPE c LENGTH 10,
+                 assignmentreference TYPE c LENGTH 18,
                END OF ty_json_structure.
 
         DATA tt_json_structure TYPE TABLE OF ty_json_structure WITH EMPTY KEY.
@@ -79,7 +80,8 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
                   Accountid
                   Profitcenter
                   Createdtime
-                  AccountingDocumenttype )
+                  AccountingDocumenttype
+                  Assignmentreference )
              WITH VALUE #( (
                   %cid = cid
                   Companycode = wa-Companycode
@@ -96,6 +98,7 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
                   Profitcenter = wa-Profitcenter
                   Createdtime = cl_abap_context_info=>get_system_time( )
                   AccountingDocumenttype = 'DZ'
+                  Assignmentreference = wa-Assignmentreference
                   ) )
               REPORTED DATA(ls_po_reported)
               FAILED   DATA(ls_po_failed)

@@ -132,6 +132,7 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
                             HouseBank = wa_data-Housebank
                             HouseBankAccount = wa_data-Accountid
                             BusinessPlace = wa_data-Businessplace
+                            AssignmentReference = wa_data-Assignmentreference
                               ProfitCenter = wa_data-Profitcenter
                             _currencyamount = VALUE #( (
                                                 currencyrole = '00'
@@ -229,6 +230,7 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
                             glaccount = wa_data-Glaccount
                             HouseBank = wa_data-Housebank
                             HouseBankAccount = wa_data-Accountid
+                            AssignmentReference = wa_data-Assignmentreference
                               ProfitCenter = wa_data-Profitcenter
                             _currencyamount = VALUE #( (
                                                 currencyrole = '00'

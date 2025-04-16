@@ -170,6 +170,14 @@ annotate entity ZC_OIPAYMENTSPOSTED
   } ]
   CreatedAt;
   
+   @UI.identification: [ {
+    position: 190 
+  } ]
+  @UI.lineItem: [ {
+    position: 190 
+  } ]
+  Assignmentreference;
+  
   @UI.hidden: true
   Createdtime;
   
