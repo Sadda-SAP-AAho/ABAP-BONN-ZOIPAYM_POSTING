@@ -63,24 +63,40 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
 
         DATA tt_json_structure TYPE TABLE OF ty_json_structure WITH EMPTY KEY.
 
-        xco_cp_json=>data->from_string( request->get_text( ) )->write_to( REF #( tt_json_structure ) ).
+        TRY.
 
-        LOOP AT tt_json_structure INTO DATA(wa).
+            xco_cp_json=>data->from_string( request->get_text( ) )->write_to( REF #( tt_json_structure ) ).
 
-        wa-bpartner = |{ wa-bpartner ALPHA = IN }|.
+            LOOP AT tt_json_structure INTO DATA(wa).
 
-          SELECT SINGLE * FROM zr_oipayments
-          WHERE Companycode = @wa-companycode AND Documentdate = @wa-documentdate
-                AND Bpartner = @wa-bpartner  AND Createdtime = @wa-createdtime
-             INTO @DATA(wa_data).
+              wa-bpartner = |{ wa-bpartner ALPHA = IN }|.
+              wa-createdtime = |{ wa-createdtime ALPHA = IN }|.
 
-          IF wa_data-AccountingDocumenttype = 'DZ'.
-            message = postCustomerPayment( wa_data ).
-          ELSEIF wa_data-AccountingDocumenttype = 'KZ'.
-            message = postSupplierPayment( wa_data ).
-          ENDIF.
+              SELECT SINGLE * FROM zr_oipayments
+              WHERE Companycode = @wa-companycode AND Documentdate = @wa-documentdate
+                    AND Bpartner = @wa-bpartner  AND Createdtime = @wa-createdtime
+                 INTO @DATA(wa_data).
 
-        ENDLOOP.
+              IF wa_data-AccountingDocumenttype = 'DZ'.
+                message = postCustomerPayment( wa_data ).
+              ELSEIF wa_data-AccountingDocumenttype = 'KZ' OR wa_data-AccountingDocumenttype = 'EZ'.
+                message = postSupplierPayment( wa_data ).
+              ENDIF.
+
+            ENDLOOP.
+
+          CATCH cx_sy_conversion_no_date INTO DATA(lx_date).
+            message = |Error in Date Conversion: { lx_date->get_text( ) }|.
+
+          CATCH cx_sy_conversion_no_time INTO DATA(lx_time).
+            message = |Error in Time Conversion: { lx_time->get_text( ) }|.
+
+          CATCH cx_sy_open_sql_db INTO DATA(lx_sql).
+            message = |SQL Error: { lx_sql->get_text( ) }|.
+
+          CATCH cx_root INTO DATA(lx_root).
+            message = |General Error: { lx_root->get_text( ) }|.
+        ENDTRY.
 
 
       ENDMETHOD.
@@ -95,7 +111,7 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
         <je_deep>-%param = VALUE #(
         companycode = wa_data-Companycode
         businesstransactiontype = 'RFBU'
-        accountingdocumenttype = 'DZ'
+        accountingdocumenttype = wa_data-AccountingDocumenttype
         CreatedByUser = sy-uname
         documentdate = wa_data-Documentdate
         postingdate = cl_abap_context_info=>get_system_date( )
@@ -195,7 +211,7 @@ CLASS ZCL_HTTP_OIPAYMPOST IMPLEMENTATION.
         <je_deep>-%param = VALUE #(
         companycode = wa_data-Companycode
         businesstransactiontype = 'RFBU'
-        accountingdocumenttype = 'KZ'
+        accountingdocumenttype = wa_data-AccountingDocumenttype
         CreatedByUser = sy-uname
         documentdate = wa_data-Documentdate
         postingdate = cl_abap_context_info=>get_system_date( )

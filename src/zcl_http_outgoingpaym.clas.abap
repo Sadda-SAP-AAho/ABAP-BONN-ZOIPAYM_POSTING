@@ -38,7 +38,7 @@ CLASS zcl_http_outgoingpaym IMPLEMENTATION.
 
     TYPES: BEGIN OF ty_json_structure,
              companycode   TYPE c LENGTH 4,
-             documentdate  TYPE C LENGTH 8,
+             documentdate  TYPE c LENGTH 8,
              currencycode  TYPE c LENGTH 3,
              bpartner      TYPE c LENGTH 10,
              glamount      TYPE p LENGTH 16 DECIMALS 2,
@@ -53,62 +53,68 @@ CLASS zcl_http_outgoingpaym IMPLEMENTATION.
 
     DATA tt_json_structure TYPE TABLE OF ty_json_structure WITH EMPTY KEY.
 
-    xco_cp_json=>data->from_string( request->get_text( ) )->write_to( REF #( tt_json_structure ) ).
+    TRY.
 
-    LOOP AT tt_json_structure INTO DATA(wa).
+        xco_cp_json=>data->from_string( request->get_text( ) )->write_to( REF #( tt_json_structure ) ).
 
-      DATA(cid) = getcid( ).
-      MODIFY ENTITIES OF zr_oipayments
-     ENTITY ZrOipayments
-     CREATE FIELDS (
-          Companycode
-          Documentdate
-          Bpartner
-          Currencycode
-          Glamount
-          Businessplace
-          Sectioncode
-          Gltext
-          Glaccount
-          Housebank
-          Accountid
-          Profitcenter
-          Createdtime
-          AccountingDocumenttype )
-     WITH VALUE #( (
-          %cid = cid
-          Companycode = wa-Companycode
-          Documentdate = wa-Documentdate
-          Bpartner =  |{ wa-Bpartner ALPHA = IN }|
-          Currencycode = wa-Currencycode
-          Glamount = wa-Glamount
-          Businessplace = wa-Businessplace
-          Sectioncode = wa-Sectioncode
-          Gltext = wa-Gltext
-          Glaccount = wa-Glaccount
-          Housebank = wa-Housebank
-          Accountid = wa-Accountid
-          Profitcenter = wa-Profitcenter
-          Createdtime = cl_abap_context_info=>get_system_time( )
-          AccountingDocumenttype = 'KZ'
-          ) )
-      REPORTED DATA(ls_po_reported)
-      FAILED   DATA(ls_po_failed)
-      MAPPED   DATA(ls_po_mapped).
+        LOOP AT tt_json_structure INTO DATA(wa).
 
-      COMMIT ENTITIES BEGIN
-         RESPONSE OF zr_oipayments
-         FAILED DATA(ls_save_failed)
-         REPORTED DATA(ls_save_reported).
+          DATA(cid) = getcid( ).
+          MODIFY ENTITIES OF zr_oipayments
+         ENTITY ZrOipayments
+         CREATE FIELDS (
+              Companycode
+              Documentdate
+              Bpartner
+              Currencycode
+              Glamount
+              Businessplace
+              Sectioncode
+              Gltext
+              Glaccount
+              Housebank
+              Accountid
+              Profitcenter
+              Createdtime
+              AccountingDocumenttype )
+         WITH VALUE #( (
+              %cid = cid
+              Companycode = wa-Companycode
+              Documentdate = wa-Documentdate
+              Bpartner =  |{ wa-Bpartner ALPHA = IN }|
+              Currencycode = wa-Currencycode
+              Glamount = wa-Glamount
+              Businessplace = wa-Businessplace
+              Sectioncode = wa-Sectioncode
+              Gltext = wa-Gltext
+              Glaccount = wa-Glaccount
+              Housebank = wa-Housebank
+              Accountid = wa-Accountid
+              Profitcenter = wa-Profitcenter
+              Createdtime = cl_abap_context_info=>get_system_time( )
+              AccountingDocumenttype = 'KZ'
+              ) )
+          REPORTED DATA(ls_po_reported)
+          FAILED   DATA(ls_po_failed)
+          MAPPED   DATA(ls_po_mapped).
 
-      IF ls_po_failed IS NOT INITIAL.
-        message = 'Failed to save data'.
-      ELSE.
-        message = 'Data saved successfully'.
-      ENDIF.
+          COMMIT ENTITIES BEGIN
+             RESPONSE OF zr_oipayments
+             FAILED DATA(ls_save_failed)
+             REPORTED DATA(ls_save_reported).
 
-      COMMIT ENTITIES END.
-    ENDLOOP.
+          IF ls_po_failed IS NOT INITIAL OR ls_save_failed IS NOT INITIAL.
+            message = 'Failed to save data'.
+          ELSE.
+            message = 'Data saved successfully'.
+          ENDIF.
+
+          COMMIT ENTITIES END.
+        ENDLOOP.
+
+      CATCH cx_root INTO DATA(lx_root).
+        message = |General Error: { lx_root->get_text( ) }|.
+    ENDTRY.
 
 
   ENDMETHOD.

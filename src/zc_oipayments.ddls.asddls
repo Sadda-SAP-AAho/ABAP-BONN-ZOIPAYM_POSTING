@@ -10,6 +10,7 @@ define root view entity ZC_OIPAYMENTS
   key Bpartner,
   key Createdtime,
   Postingdate,
+  AccountingDocumenttype,
   Glamount,
   Businessplace,
   Sectioncode,

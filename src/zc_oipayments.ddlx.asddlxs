@@ -180,6 +180,9 @@ annotate view ZC_OIPAYMENTS with
   CreatedAt;
   
   @UI.hidden: true
+  AccountingDocumenttype;
+  
+  @UI.hidden: true
   LastChangedBy;
   
   @UI.hidden: true

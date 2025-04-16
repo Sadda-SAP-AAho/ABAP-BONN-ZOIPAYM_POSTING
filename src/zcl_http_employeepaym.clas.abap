@@ -1,4 +1,4 @@
-class ZCL_HTTP_INCOMINGPAYM definition
+class ZCL_HTTP_EMPLOYEEPAYM definition
   public
   create public .
 
@@ -6,7 +6,7 @@ public section.
 
   interfaces IF_HTTP_SERVICE_EXTENSION .
 
-   CLASS-METHODS getCID RETURNING VALUE(cid) TYPE abp_behv_cid.
+     CLASS-METHODS getCID RETURNING VALUE(cid) TYPE abp_behv_cid.
    CLASS-METHODS saveData
     IMPORTING
       VALUE(request)  TYPE REF TO if_web_http_request
@@ -20,8 +20,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
-
+CLASS ZCL_HTTP_EMPLOYEEPAYM IMPLEMENTATION.
 
       METHOD IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
 
@@ -95,7 +94,7 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
                   Accountid = wa-Accountid
                   Profitcenter = wa-Profitcenter
                   Createdtime = cl_abap_context_info=>get_system_time( )
-                  AccountingDocumenttype = 'DZ'
+                  AccountingDocumenttype = 'EZ'
                   ) )
               REPORTED DATA(ls_po_reported)
               FAILED   DATA(ls_po_failed)
