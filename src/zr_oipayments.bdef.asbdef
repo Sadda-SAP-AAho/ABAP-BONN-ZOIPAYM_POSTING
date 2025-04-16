@@ -37,6 +37,7 @@ authorization master( global )
     Glamount = glamount;
     Accountingdocument = accountingdocument;
     AccountingDocumenttype = documenttype;
+    Assignmentreference = assignmentreference;
     Businessplace = businessplace;
     Sectioncode = sectioncode;
     Gltext = gltext;
