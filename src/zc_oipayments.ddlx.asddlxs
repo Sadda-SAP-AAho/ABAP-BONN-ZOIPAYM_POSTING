@@ -135,9 +135,9 @@ annotate view ZC_OIPAYMENTS with
   @UI.lineItem: [ {
     position: 110 
   } ]
-   @Consumption.valueHelpDefinition: [{ entity: { name: 'ZR_HOUSEBANKVH', element: 'HouseBank' },
-  additionalBinding: [{ localElement: 'Companycode',    element: 'CompanyCode',   usage:#FILTER }]
-   }]
+//   @Consumption.valueHelpDefinition: [{ entity: { name: 'ZR_HOUSEBANKVH', element: 'HouseBank' },
+//  additionalBinding: [{ localElement: 'Companycode',    element: 'CompanyCode',   usage:#FILTER }]
+//   }]
   Housebank;
   
   @UI.identification: [ {

@@ -23,6 +23,15 @@ ENDCLASS.
 CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
 
 
+      METHOD getCID.
+        TRY.
+            cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
+          CATCH cx_uuid_error.
+            ASSERT 1 = 0.
+        ENDTRY.
+      ENDMETHOD.
+
+
       METHOD IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
 
         CASE request->get_method(  ).
@@ -33,6 +42,7 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
 
 
       ENDMETHOD.
+
 
       METHOD saveData.
 
@@ -123,13 +133,5 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
         ENDTRY.
 
 
-      ENDMETHOD.
-
-      METHOD getCID.
-        TRY.
-            cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
-          CATCH cx_uuid_error.
-            ASSERT 1 = 0.
-        ENDTRY.
       ENDMETHOD.
 ENDCLASS.

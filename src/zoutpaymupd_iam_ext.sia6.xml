@@ -26,6 +26,7 @@
       <APP_ID>ZOUTPAYMUPD_IAM_EXT</APP_ID>
       <SRVC_NAME>2986BC20A55BAFADB2D564DA81FF5A</SRVC_NAME>
       <SRVC_TYPE>HT</SRVC_TYPE>
+      <TEXT>Outgoing Incoming Payments Posting</TEXT>
       <TYPE_TEXT>HTTP Service</TYPE_TEXT>
      </item>
      <item>
@@ -34,6 +35,7 @@
       <APP_ID>ZOUTPAYMUPD_IAM_EXT</APP_ID>
       <SRVC_NAME>5E9804936DFB2A456C7536EB41359F</SRVC_NAME>
       <SRVC_TYPE>HT</SRVC_TYPE>
+      <TEXT>Outgoing Incoming Payments Posting</TEXT>
       <TYPE_TEXT>HTTP Service</TYPE_TEXT>
      </item>
      <item>

@@ -26,6 +26,7 @@
       <APP_ID>ZINCOPAYMUPD_IAM_EXT</APP_ID>
       <SRVC_NAME>6B23B6DAE49BB096B0F67ED085D883</SRVC_NAME>
       <SRVC_TYPE>HT</SRVC_TYPE>
+      <TEXT>Incoming Payments Addition</TEXT>
       <TYPE_TEXT>HTTP Service</TYPE_TEXT>
      </item>
      <item>
@@ -34,6 +35,7 @@
       <APP_ID>ZINCOPAYMUPD_IAM_EXT</APP_ID>
       <SRVC_NAME>2986BC20A55BAFADB2D564DA81FF5A</SRVC_NAME>
       <SRVC_TYPE>HT</SRVC_TYPE>
+      <TEXT>Outgoing Incoming Payments Posting</TEXT>
       <TYPE_TEXT>HTTP Service</TYPE_TEXT>
      </item>
      <item>

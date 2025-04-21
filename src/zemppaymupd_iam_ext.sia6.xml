@@ -26,6 +26,7 @@
       <APP_ID>ZEMPPAYMUPD_IAM_EXT</APP_ID>
       <SRVC_NAME>A3A3ED5F726D0239DFEB85641ECD4A</SRVC_NAME>
       <SRVC_TYPE>HT</SRVC_TYPE>
+      <TEXT>Employee Payments Addition</TEXT>
       <TYPE_TEXT>HTTP Service</TYPE_TEXT>
      </item>
      <item>
@@ -34,6 +35,7 @@
       <APP_ID>ZEMPPAYMUPD_IAM_EXT</APP_ID>
       <SRVC_NAME>2986BC20A55BAFADB2D564DA81FF5A</SRVC_NAME>
       <SRVC_TYPE>HT</SRVC_TYPE>
+      <TEXT>Outgoing Incoming Payments Posting</TEXT>
       <TYPE_TEXT>HTTP Service</TYPE_TEXT>
      </item>
      <item>

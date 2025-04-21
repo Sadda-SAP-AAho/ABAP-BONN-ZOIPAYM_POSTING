@@ -20,7 +20,17 @@ ENDCLASS.
 
 
 
-CLASS zcl_http_outgoingpaym IMPLEMENTATION.
+CLASS ZCL_HTTP_OUTGOINGPAYM IMPLEMENTATION.
+
+
+  METHOD getCID.
+    TRY.
+        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
+      CATCH cx_uuid_error.
+        ASSERT 1 = 0.
+    ENDTRY.
+  ENDMETHOD.
+
 
   METHOD if_http_service_extension~handle_request.
 
@@ -120,13 +130,5 @@ CLASS zcl_http_outgoingpaym IMPLEMENTATION.
     ENDTRY.
 
 
-  ENDMETHOD.
-
-  METHOD getCID.
-    TRY.
-        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
-      CATCH cx_uuid_error.
-        ASSERT 1 = 0.
-    ENDTRY.
   ENDMETHOD.
 ENDCLASS.
