@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/model/odata/v2/ODataModel",
     "sap/m/MessageToast",
     "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator"
-], function (Controller, ODataModel, MessageToast,Filter,FilterOperator) {
+    "sap/ui/model/FilterOperator",
+    "sap/ui/core/BusyIndicator"
+], function (Controller, ODataModel, MessageToast, Filter, FilterOperator, BusyIndicator) {
     "use strict";
     return Controller.extend("zoutpaymupd.controller.Upload", {
 
@@ -16,7 +17,7 @@ sap.ui.define([
         onClickDelete() {
             let selectedData = this.byId("RespTable").getSelectedItems(),
                 that = this;
-
+            BusyIndicator.show();
             this.oDataModel.setDeferredGroups(["deleteItems"]);
             for (let index = 0; index < selectedData.length; index++) {
                 const element = selectedData[index].getBindingContext()?.getObject() || {};
@@ -36,6 +37,7 @@ sap.ui.define([
                     },
                     success: function () {
                         that.byId("_IDGenSmartTable").rebindTable(true);
+                        BusyIndicator.hide();
                     }
                 })
 
@@ -57,6 +59,7 @@ sap.ui.define([
                     "Createdtime": `${Math.floor(element.Createdtime.ms / 3600000).toString().padStart(2, '0')}${(Math.floor(element.Createdtime.ms / 60000) % 60).toString().padStart(2, '0')}${(Math.floor(element.Createdtime.ms / 1000) % 60).toString().padStart(2, '0')}`
                 }
             })
+            BusyIndicator.show();
 
 
             $.ajax({
@@ -67,9 +70,11 @@ sap.ui.define([
                 success: function (response) {
                     MessageToast.show(response);
                     that.byId("_IDGenSmartTable").rebindTable(true);
+                    BusyIndicator.hide();
                 },
                 error: function (error) {
                     MessageToast.show("Upload failed: " + (error.responseText || "Unknown error"));
+                    BusyIndicator.hide();
                 }
             });
 
@@ -116,10 +121,10 @@ sap.ui.define([
                                     Housebank: element["House Bank"].toString(),
                                     Accountid: element["Account Id"].toString(),
                                     Profitcenter: element["Profit Center"].toString(),
-                                    AssignmentReference:element["Assignment"].toString(),
+                                    AssignmentReference: element["Assignment"].toString(),
                                 });
                             });
-
+                            BusyIndicator.show();
                             $.ajax({
                                 url: '/sap/bc/http/sap/ZHTTP_OUTGOINGPAYM',
                                 method: "POST",
@@ -128,9 +133,11 @@ sap.ui.define([
                                 success: function (response) {
                                     MessageToast.show(response);
                                     that.byId("_IDGenSmartTable").rebindTable(true);
+                                    BusyIndicator.hide();
                                 },
                                 error: function (error) {
                                     MessageToast.show("Upload failed: " + (error.responseText || "Unknown error"));
+                                    BusyIndicator.hide();
                                 }
                             });
 
@@ -138,6 +145,7 @@ sap.ui.define([
 
                     } catch (error) {
                         console.error("Error parsing the Excel file: ", error);
+                        BusyIndicator.hide();
                     }
                 };
                 reader.onerror = function (error) {
@@ -146,23 +154,23 @@ sap.ui.define([
                 reader.readAsBinaryString(file);
             } else {
                 console.error("FileReader is not supported in this browser.");
-            }   
+            }
         },
-        beforerRebind(e){
-                var b = e.getParameter("bindingParams");
-                var aDateFilters = []
-        
-                aDateFilters.push(new Filter("AccountingDocumenttype", FilterOperator.EQ, 'KZ'))
-                if (!aDateFilters.length) return
-                var oOwnMultiFilter = new Filter(aDateFilters, true);
-        
-                if (b.filters[0] && b.filters[0].aFilters) {
-                    var oSmartTableMultiFilter = b.filters[0];
-                    b.filters[0] = new Filter([oSmartTableMultiFilter, oOwnMultiFilter], true);
-                } else {
-                    b.filters.push(oOwnMultiFilter);
-                }
-        
+        beforerRebind(e) {
+            var b = e.getParameter("bindingParams");
+            var aDateFilters = []
+
+            aDateFilters.push(new Filter("AccountingDocumenttype", FilterOperator.EQ, 'KZ'))
+            if (!aDateFilters.length) return
+            var oOwnMultiFilter = new Filter(aDateFilters, true);
+
+            if (b.filters[0] && b.filters[0].aFilters) {
+                var oSmartTableMultiFilter = b.filters[0];
+                b.filters[0] = new Filter([oSmartTableMultiFilter, oOwnMultiFilter], true);
+            } else {
+                b.filters.push(oOwnMultiFilter);
+            }
+
         }
 
     })
