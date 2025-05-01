@@ -117,6 +117,17 @@ annotate view ZC_OIPAYMENTS with
   } ]
   Gltext;
   
+    
+  @EndUserText.label: 'Special GL Indicator'
+  @UI.identification: [ {
+    position: 95 
+  } ]
+  @UI.lineItem: [ {
+    position: 95
+  } ]
+  SpecialGlCode;
+  
+  
   @UI.identification: [ {
     position: 100 
   } ]
@@ -186,6 +197,15 @@ annotate view ZC_OIPAYMENTS with
     position: 190 
   } ]
   Assignmentreference;
+  
+  @EndUserText.label: 'Type' 
+  @UI.identification: [ {
+    position: 200 
+  } ]
+  @UI.lineItem: [ {
+    position: 200 
+  } ]
+  Type;
   
   @UI.hidden: true
   AccountingDocumenttype;

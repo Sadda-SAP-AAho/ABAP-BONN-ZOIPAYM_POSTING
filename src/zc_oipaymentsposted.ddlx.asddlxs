@@ -114,6 +114,16 @@ annotate entity ZC_OIPAYMENTSPOSTED
   } ]
   Gltext;
   
+  
+  @EndUserText.label: 'Special GL Indicator'
+  @UI.identification: [ {
+    position: 105 
+  } ]
+  @UI.lineItem: [ {
+    position: 105
+  } ]
+  SpecialGlCode;
+  
   @UI.identification: [ {
     position: 110 
   } ]

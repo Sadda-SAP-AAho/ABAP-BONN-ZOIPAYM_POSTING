@@ -19,6 +19,7 @@ authorization master( global )
    Companycode,
    Documentdate,
    Createdtime,
+   SpecialGlCode,
    Bpartner;
 
 
@@ -35,6 +36,7 @@ authorization master( global )
     Createdtime = createdtime;
     Postingdate = postingdate;
     Glamount = glamount;
+    Type = type;
     Accountingdocument = accountingdocument;
     AccountingDocumenttype = documenttype;
     Assignmentreference = assignmentreference;
@@ -46,6 +48,7 @@ authorization master( global )
     Accountid = accountid;
     Profitcenter = profitcenter;
     Currencycode = currencycode;
+    SpecialGlCode = special_gl_code;
     Isdeleted = isdeleted;
     Isposted = isposted;
     CreatedBy = created_by;

@@ -22,16 +22,6 @@ ENDCLASS.
 
 CLASS ZCL_HTTP_EMPLOYEEPAYM IMPLEMENTATION.
 
-
-      METHOD getCID.
-        TRY.
-            cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
-          CATCH cx_uuid_error.
-            ASSERT 1 = 0.
-        ENDTRY.
-      ENDMETHOD.
-
-
       METHOD IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
 
         CASE request->get_method(  ).
@@ -43,7 +33,6 @@ CLASS ZCL_HTTP_EMPLOYEEPAYM IMPLEMENTATION.
 
       ENDMETHOD.
 
-
       METHOD saveData.
 
         DATA: lv_oipaym TYPE TABLE OF zr_oipayments,
@@ -51,7 +40,8 @@ CLASS ZCL_HTTP_EMPLOYEEPAYM IMPLEMENTATION.
 
         TYPES: BEGIN OF ty_json_structure,
                  companycode   TYPE c LENGTH 4,
-                 documentdate  TYPE c LENGTH 8,
+                 documentdate  TYPE c LENGTH 10,
+                 postingdate  TYPE c LENGTH 10,
                  currencycode  TYPE c LENGTH 3,
                  bpartner      TYPE c LENGTH 10,
                  glamount      TYPE p LENGTH 16 DECIMALS 2,
@@ -79,9 +69,11 @@ CLASS ZCL_HTTP_EMPLOYEEPAYM IMPLEMENTATION.
              CREATE FIELDS (
                   Companycode
                   Documentdate
+                  Postingdate
                   Bpartner
                   Currencycode
                   Glamount
+                  Type
                   Businessplace
                   Sectioncode
                   Gltext
@@ -96,9 +88,11 @@ CLASS ZCL_HTTP_EMPLOYEEPAYM IMPLEMENTATION.
                   %cid = cid
                   Companycode = wa-Companycode
                   Documentdate = wa-Documentdate
+                  Postingdate = wa-postingdate
                   Bpartner =  |{ wa-Bpartner ALPHA = IN }|
                   Currencycode = wa-Currencycode
                   Glamount = wa-Glamount
+                  Type = 'EMPL'
                   Businessplace = wa-Businessplace
                   Sectioncode = wa-Sectioncode
                   Gltext = wa-Gltext
@@ -133,5 +127,13 @@ CLASS ZCL_HTTP_EMPLOYEEPAYM IMPLEMENTATION.
         ENDTRY.
 
 
+      ENDMETHOD.
+
+      METHOD getCID.
+        TRY.
+            cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
+          CATCH cx_uuid_error.
+            ASSERT 1 = 0.
+        ENDTRY.
       ENDMETHOD.
 ENDCLASS.

@@ -1,4 +1,4 @@
-class ZCL_HTTP_INCOMINGPAYM definition
+class ZCL_HTTP_ADVANCEPAYM definition
   public
   create public .
 
@@ -6,7 +6,8 @@ public section.
 
   interfaces IF_HTTP_SERVICE_EXTENSION .
 
-   CLASS-METHODS getCID RETURNING VALUE(cid) TYPE abp_behv_cid.
+
+     CLASS-METHODS getCID RETURNING VALUE(cid) TYPE abp_behv_cid.
    CLASS-METHODS saveData
     IMPORTING
       VALUE(request)  TYPE REF TO if_web_http_request
@@ -20,10 +21,10 @@ ENDCLASS.
 
 
 
-CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
+CLASS ZCL_HTTP_ADVANCEPAYM IMPLEMENTATION.
 
 
-      METHOD IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
+  method IF_HTTP_SERVICE_EXTENSION~HANDLE_REQUEST.
 
         CASE request->get_method(  ).
           WHEN CONV string( if_web_http_client=>post ).
@@ -40,20 +41,21 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
               wa_oipaym TYPE zr_oipayments.
 
         TYPES: BEGIN OF ty_json_structure,
-                 companycode   TYPE c LENGTH 4,
+                 companycode         TYPE c LENGTH 4,
                  documentdate  TYPE c LENGTH 10,
                  postingdate  TYPE c LENGTH 10,
-                 currencycode  TYPE c LENGTH 3,
-                 bpartner      TYPE c LENGTH 10,
-                 glamount      TYPE p LENGTH 16 DECIMALS 2,
-                 businessplace TYPE c LENGTH 10,
-                 sectioncode   TYPE c LENGTH 10,
-                 gltext        TYPE c LENGTH 100,
-                 glaccount     TYPE c LENGTH 10,
-                 housebank     TYPE c LENGTH 10,
-                 accountid     TYPE c LENGTH 10,
-                 profitcenter  TYPE c LENGTH 10,
+                 currencycode        TYPE c LENGTH 3,
+                 bpartner            TYPE c LENGTH 10,
+                 glamount            TYPE p LENGTH 16 DECIMALS 2,
+                 businessplace       TYPE c LENGTH 10,
+                 sectioncode         TYPE c LENGTH 10,
+                 gltext              TYPE c LENGTH 100,
+                 glaccount           TYPE c LENGTH 10,
+                 housebank           TYPE c LENGTH 10,
+                 accountid           TYPE c LENGTH 10,
+                 profitcenter        TYPE c LENGTH 10,
                  assignmentreference TYPE c LENGTH 18,
+                 specialglcode       TYPE c LENGTH 1,
                END OF ty_json_structure.
 
         DATA tt_json_structure TYPE TABLE OF ty_json_structure WITH EMPTY KEY.
@@ -65,6 +67,7 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
             LOOP AT tt_json_structure INTO DATA(wa).
 
               DATA(cid) = getcid( ).
+              DATA(curTime) = cl_abap_context_info=>get_system_time( ).
               MODIFY ENTITIES OF zr_oipayments
              ENTITY ZrOipayments
              CREATE FIELDS (
@@ -84,16 +87,18 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
                   Profitcenter
                   Createdtime
                   AccountingDocumenttype
-                  Assignmentreference )
+                  Assignmentreference
+                  SpecialGlCode
+                   )
              WITH VALUE #( (
                   %cid = cid
                   Companycode = wa-Companycode
                   Documentdate = wa-Documentdate
-                  Postingdate = wa-postingdate
+                  Postingdate = wa-Postingdate
                   Bpartner =  |{ wa-Bpartner ALPHA = IN }|
                   Currencycode = wa-Currencycode
                   Glamount = wa-Glamount
-                  Type = 'INCO'
+                  Type = 'ADVC'
                   Businessplace = wa-Businessplace
                   Sectioncode = wa-Sectioncode
                   Gltext = wa-Gltext
@@ -101,9 +106,10 @@ CLASS ZCL_HTTP_INCOMINGPAYM IMPLEMENTATION.
                   Housebank = wa-Housebank
                   Accountid = wa-Accountid
                   Profitcenter = wa-Profitcenter
-                  Createdtime = cl_abap_context_info=>get_system_time( )
-                  AccountingDocumenttype = 'DZ'
+                  Createdtime = curTime
+                  AccountingDocumenttype = 'KZ'
                   Assignmentreference = wa-Assignmentreference
+                  SpecialGlCode = wa-SpecialGlCode
                   ) )
               REPORTED DATA(ls_po_reported)
               FAILED   DATA(ls_po_failed)

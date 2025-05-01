@@ -20,17 +20,7 @@ ENDCLASS.
 
 
 
-CLASS ZCL_HTTP_OUTGOINGPAYM IMPLEMENTATION.
-
-
-  METHOD getCID.
-    TRY.
-        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
-      CATCH cx_uuid_error.
-        ASSERT 1 = 0.
-    ENDTRY.
-  ENDMETHOD.
-
+CLASS zcl_http_outgoingpaym IMPLEMENTATION.
 
   METHOD if_http_service_extension~handle_request.
 
@@ -48,7 +38,8 @@ CLASS ZCL_HTTP_OUTGOINGPAYM IMPLEMENTATION.
 
     TYPES: BEGIN OF ty_json_structure,
              companycode   TYPE c LENGTH 4,
-             documentdate  TYPE c LENGTH 8,
+             documentdate  TYPE c LENGTH 10,
+             postingdate  TYPE c LENGTH 10,
              currencycode  TYPE c LENGTH 3,
              bpartner      TYPE c LENGTH 10,
              glamount      TYPE p LENGTH 16 DECIMALS 2,
@@ -76,9 +67,11 @@ CLASS ZCL_HTTP_OUTGOINGPAYM IMPLEMENTATION.
          CREATE FIELDS (
               Companycode
               Documentdate
+              Postingdate
               Bpartner
               Currencycode
               Glamount
+              Type
               Businessplace
               Sectioncode
               Gltext
@@ -93,9 +86,11 @@ CLASS ZCL_HTTP_OUTGOINGPAYM IMPLEMENTATION.
               %cid = cid
               Companycode = wa-Companycode
               Documentdate = wa-Documentdate
+              Postingdate = wa-Postingdate
               Bpartner =  |{ wa-Bpartner ALPHA = IN }|
               Currencycode = wa-Currencycode
               Glamount = wa-Glamount
+              Type = 'OUTG'
               Businessplace = wa-Businessplace
               Sectioncode = wa-Sectioncode
               Gltext = wa-Gltext
@@ -130,5 +125,13 @@ CLASS ZCL_HTTP_OUTGOINGPAYM IMPLEMENTATION.
     ENDTRY.
 
 
+  ENDMETHOD.
+
+  METHOD getCID.
+    TRY.
+        cid = to_upper( cl_uuid_factory=>create_system_uuid( )->create_uuid_x16( ) ).
+      CATCH cx_uuid_error.
+        ASSERT 1 = 0.
+    ENDTRY.
   ENDMETHOD.
 ENDCLASS.

@@ -10,6 +10,7 @@ provider contract transactional_query
   key Documentdate,
   key Bpartner,
   key Createdtime,
+  key SpecialGlCode,
   Postingdate,
   Glamount,
   Businessplace,
