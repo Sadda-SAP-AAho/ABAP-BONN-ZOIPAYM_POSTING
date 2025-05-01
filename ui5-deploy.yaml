@@ -22,7 +22,7 @@ builder:
         app:
           name: ZOUTPAYMUPD
           package: ZOIPAYM_POSTING
-          transport: NXSK901311
+          transport: NXSK901585
         exclude:
           - /test/
   resources:

@@ -27,8 +27,10 @@ sap.ui.define([
                 this.oDataModel.create("/falsedelete", {}, {
                     urlParameters: {
                         "Companycode": `'${element.Companycode}'`,
-                        "Documentdate": `datetime'${element.Documentdate.toISOString().replace("Z", "")}'`,
+                        "Documentdate": `'${element.Documentdate}'`,
+                        // "Documentdate": `datetime'${element.Documentdate.toISOString().replace("Z", "")}'`,
                         "Bpartner": `'${element.Bpartner}'`,
+                        "SpecialGlCode": `'${element.SpecialGlCode}'`,
                         "Createdtime": `time'PT${Math.floor(element.Createdtime.ms / 3600000)}H${Math.floor(element.Createdtime.ms / 60000) % 60}M${Math.floor(element.Createdtime.ms / 1000) % 60}S'`
 
                     },
@@ -54,7 +56,7 @@ sap.ui.define([
 
                 return {
                     "Companycode": element.Companycode,
-                    "Documentdate": element.Documentdate.toISOString().replace("T00:00:00.000Z", "").replace(/-/g, ""),
+                    "Documentdate": element.Documentdate,//.toISOString().replace("T00:00:00.000Z", "").replace(/-/g, ""),
                     "Bpartner": element.Bpartner,
                     "Createdtime": `${Math.floor(element.Createdtime.ms / 3600000).toString().padStart(2, '0')}${(Math.floor(element.Createdtime.ms / 60000) % 60).toString().padStart(2, '0')}${(Math.floor(element.Createdtime.ms / 1000) % 60).toString().padStart(2, '0')}`
                 }
@@ -106,11 +108,14 @@ sap.ui.define([
                             excelData = XLSX.utils.sheet_to_row_object_array(worksheet);
                             headers = XLSX.utils.sheet_to_json(worksheet, { header: 1 })[0];
                             excelData.forEach((element) => {
-                                const [day, month, year] = element["Document Date"].toString().split("-");
-                                const formattedDate = `${year}${month}${day}`;
+                                 // const [day, month, year] = element["Document Date"].toString().split("-");
+                                // const formattedDate = `${year}${month}${day}`;
+                                // const [day1, month1, year1] = element["Posting Date"].toString().split("-");
+                                // const formattedDate2 = `${year1}${month1}${day1}`;
                                 datas.push({
                                     Companycode: element["Company Code"].toString(),
-                                    Documentdate: formattedDate,
+                                    Documentdate: element["Document Date"].toString(),
+                                    Postingdate: element["Posting Date"].toString(),
                                     Currencycode: element["Currency Code"].toString(),
                                     Bpartner: element["Supplier"].toString(),
                                     Glamount: element["Amount"],
@@ -160,7 +165,7 @@ sap.ui.define([
             var b = e.getParameter("bindingParams");
             var aDateFilters = []
 
-            aDateFilters.push(new Filter("AccountingDocumenttype", FilterOperator.EQ, 'KZ'))
+            aDateFilters.push(new Filter("Type", FilterOperator.EQ, 'OUTG'))
             if (!aDateFilters.length) return
             var oOwnMultiFilter = new Filter(aDateFilters, true);
 
